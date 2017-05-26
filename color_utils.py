@@ -13,8 +13,10 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 #----------------------------------------------------------------#
-# 1- color_convert
+
 """
+# 1- color_convert
+
 color_convert : to convert an image to different current space
 inputs: img: src image in RGB
 		color_space: wanted color_space
@@ -45,8 +47,10 @@ def color_convert(img,color_space='RGB'):
 
 
 #-----------------------------------------------------------------#
-# 2- bin_spatial
+
 """
+# 2- bin_spatial
+
 bin_spatial : This function is used to  resize and image and get a vector of raw intensities
 
 """
@@ -55,8 +59,10 @@ def bin_spatial(img,size=(32,32)):
 	return features
 
 #------------------------------------------------------------------#
-# 3- color_hostogram
+
 """
+# 3- color_hostogram
+
 This function is used to get the histogram of every channel of an image
 """
 def color_histogram(img,nbins=32,bins_range=(0,256)):
@@ -72,14 +78,16 @@ def color_histogram(img,nbins=32,bins_range=(0,256)):
 
 #---------------------------------------------------------------------------------------------#
 
-# 4- extract_color_features
+
 """
+# 4- extract_color_features
+
 This function is used to:
 	1- convert an image to a desirable color space
 	2- extract the raw intensity features from the image using bin_spatial function
 	3- extract the histogram of each image channel using color_histogram function
 	4- extract hog_features of of the image
-	4- concatenate the raw features with histogram in one feature vector
+	5- concatenate the raw features with histogram in one feature vector
 
 	input : a list of images
 	output: raw and histogram features

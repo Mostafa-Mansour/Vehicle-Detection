@@ -13,8 +13,10 @@ from skimage.feature import hog
 from color_utils import color_convert
 
 #----------------------------------------------------------------#
-# 1- get_hog_features	
+	
 """
+# 1- get_hog_features
+
 This function is used to get Histogram of Oriented Gradient (HOG) of the features
 
 """
@@ -36,9 +38,11 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
 
 #-------------------------------------------------------------------------------------------------#
 
-# 2- extract_hog_features
+
 
 """
+# 2- extract_hog_features
+
 This function is used to:
 	1- convert a list of images to a specific color space
 	2- extract the HOG features of each image

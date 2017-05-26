@@ -12,8 +12,10 @@ import matplotlib.pyplot as plt
 
 #---------------------------------------------------------------------------------------------#
 
-# 1- draw_boxes
+
 """
+# 1- draw_boxes
+
 This function is used to draw rectangular boxes on a certain image
 
 Input: 	- img:image
@@ -36,8 +38,9 @@ def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
 
 #--------------------------------------------------------------------------------------------#
 
-# slide_windows
 """
+# 2- slide_windows
+
 This function is used to get  slide windows in an image
 inputs:	- img:image
 		- x_start_stop:starting and stopping x coordinate of the searching area
