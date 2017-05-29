@@ -27,8 +27,8 @@ def scale_vector(X):
 	# Fit a per-column scaler
 	X_scaler = StandardScaler().fit(X)
 	# Apply the scaler to X
-	scaled_X = X_scaler.transform(X)
-	return scaled_X
+	#scaled_X = X_scaler.transform(X)
+	return X_scaler
 
 #--------------------------------------------------------------------------------------------#
 
@@ -51,7 +51,7 @@ outputs:	- x_train, y_train 	: training data set contains features and labels re
 
 def get_train_test_set(scaled_X,y,test_size=0.2,random_state=np.random.randint(0, 100)):
 	
-	x_train, x_test,  y_train, y_test=train_test_split(scaled_X, y, test_size=0.2, random_state=rand_state)
+	x_train, x_test,  y_train, y_test=train_test_split(scaled_X, y, test_size=0.2, random_state=random_state)
 	
 	return x_train,x_test,y_train,y_test
 #--------------------------------------------------------------------------------------------------------#
@@ -66,7 +66,7 @@ inputs: 	x_train,y_train : training features and their labels
 
 output: 	a trained_classifier
 """
-def train(x_train,y_train,classifier='linear_svm'):
+def classifier_fit(x_train,y_train,classifier='linear_svm'):
 
 	if classifier=='linear_svm':
 		svc=LinearSVC()
@@ -82,12 +82,12 @@ This function is used to get the accuracy of a specific classifier on the test s
 inputs: 	x_test,y_test	: features and labels of the test sets
 			classifier 		: The classifier that used during training
 
-outputs: 			 		: the accuracy of the classifier on tested on the test set
+outputs:	the accuracy of the classifier on tested on the test set
 """
 
-def classifier_accuracy(x_test,y_test,classifier='linear_svm'):
-	if classifier=='linear_svm':
-		return svc.score(x_test, y_test)
+def classifier_accuracy(x_test,y_test,classifier,classifier_type='linear_svm'):
+	if classifier_type=='linear_svm':
+		return classifier.score(x_test, y_test)
 
 #--------------------------------------------------------------------------------------------#
 
@@ -101,7 +101,7 @@ inputs: 	x_test			: vector of features of  images
 outputs: 	 		 		: predicted label of these features
 """
 
-def classifier_accuracy(x,classifier='linear_svm'):
+def classifier_predict(x,classifier='linear_svm'):
 	if classifier=='linear_svm':
 		return svc.predict(x)
 

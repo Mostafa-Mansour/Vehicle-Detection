@@ -11,6 +11,7 @@ import numpy as np
 import cv2
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+from globals_variables import *
 
 #----------------------------------------------------------------#
 
@@ -26,6 +27,8 @@ output: img: dst image
 def color_convert(img,color_space='RGB'):
 	
 	if color_space != 'RGB':
+		img_copy=np.copy(img)
+
 		if color_space=='HSV':
 			img_copy=cv2.cvtColor(img,cv2.COLOR_RGB2HSV)
 		elif color_space=='HLS':
@@ -55,8 +58,11 @@ bin_spatial : This function is used to  resize and image and get a vector of raw
 
 """
 def bin_spatial(img,size=(32,32)):
-	features=cv2.resize(img,size).ravel()
-	return features
+	#features=cv2.resize(img,size).ravel()
+	color1=cv2.resize(img[:,:,0],size).ravel()
+	color2=cv2.resize(img[:,:,1],size).ravel()
+	color3=cv2.resize(img[:,:,2],size).ravel()
+	return np.hstack((color1,color2,color3))
 
 #------------------------------------------------------------------#
 
@@ -93,8 +99,8 @@ This function is used to:
 	output: raw and histogram features
 """
 
-def extract_color_features(imgs, cspace='RGB', spatial_size=(32, 32),
-                        hist_bins=32, hist_range=(0, 256)):
+def extract_color_features(imgs, cspace=color_space, spatial_size=spatial_size,
+                        hist_bins=hist_bins, hist_range=bins_range):
     # Create a list to append feature vectors to
     features = []
     # Iterate through the list of images
@@ -123,16 +129,21 @@ def extract_color_features(imgs, cspace='RGB', spatial_size=(32, 32),
 #-------------------------------------------------------------------------------------#
 
 if __name__ == '__main__':
-	img=mpimg.imread('25.png')
-	raw_features=bin_spatial(img)
-	histogram_features=color_histogram(img,bins_range=(0,1))
-	features=extract_color_features(['25.png'],hist_range=(0,1))
+	img=mpimg.imread('./test_images/25.png')
+	#raw_features=bin_spatial(img)
+	#print(raw_features.shape)
+	#histogram_features=color_histogram(img,bins_range=(0,1))
+	#print(histogram_features.shape)
+	#print(np.hstack((raw_features,histogram_features)).shape)
+	features_not=extract_color_features(['./test_images/extra40.png'])
+	features_not=np.array(features_not).ravel()
+	features=extract_color_features(['./test_images/25.png'])
 	features=np.array(features).ravel()
-	f,(ax1,ax2,ax3)=plt.subplots(1,3,figsize=(20,10))
-	ax1.plot(raw_features)
-	ax1.set_title('raw intensity features')
-	ax2.plot(histogram_features)
-	ax2.set_title('histogram feature')
-	ax3.plot(features)
-	ax3.set_title('raw intensity and histogram features')
+	f,(ax1,ax2)=plt.subplots(1,2,figsize=(20,10))
+	ax1.plot(features)
+	ax1.set_title('Car Color features')
+	ax2.plot(features_not)
+	ax2.set_title('not Car color features')
+	# ax3.plot(features)
+	# ax3.set_title('raw intensity and histogram features')
 	plt.show()
